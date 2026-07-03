@@ -1,0 +1,25 @@
+{
+  "name": "trackada",
+  "version": "1.0.0",
+  "description": "Trackada est un outil en ligne de commande développé en Node.js pur.",
+  "main": "checktrack.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adatechschool/trackada-victormetral.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/adatechschool/trackada-victormetral/issues"
+  },
+  "homepage": "https://github.com/adatechschool/trackada-victormetral#readme",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}
