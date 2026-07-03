@@ -15,7 +15,26 @@ Il permet de vérifier que les projets Ada sont bien présents sur l'ordinateur,
 
 ## Lancer le projet
 
-Dans le terminal :
-
 ```bash
 node checktrack.js
+```
+
+## Lancer les tests manuels
+
+```bash
+node test-manuel.js
+```
+
+## Lancer les tests Jest
+
+```bash
+npm test
+```
+
+## Fonctions testées
+
+- `fichiersManquants`
+- `estBienNomme`
+- `ligneRapport`
+
+
