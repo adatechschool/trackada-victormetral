@@ -12,6 +12,16 @@ Il permet de vérifier que les projets Ada sont bien présents sur l'ordinateur,
 - Vérification des fichiers obligatoires pour chaque projet
 - Affichage des erreurs avec des tirets
 - Calcul du pourcentage de projets correctement initialisés
+- Tests manuels des fonctions principales
+- Tests automatisés avec Jest
+
+## Installation
+
+Après avoir cloné le projet, installe les dépendances :
+
+```bash
+npm install
+```
 
 ## Lancer le projet
 
@@ -36,5 +46,3 @@ npm test
 - `fichiersManquants`
 - `estBienNomme`
 - `ligneRapport`
-
-
