@@ -1,17 +1,32 @@
-import { readFileSync, existsSync } from "fs"
+import {
+  readFileSync,
+  existsSync,
+  readdirSync
+} from "fs"
+
 import { join } from "path"
 import { homedir } from "os"
 
+import {
+  fichiersManquants,
+  ligneRapport
+} from "./utils.js"
+
+
 const cheminHome = homedir()
+
 
 const contenuJson = readFileSync(
   "./track.json",
   "utf-8"
 )
 
+
 const track = JSON.parse(contenuJson)
 
+
 let projetsOK = 0
+
 
 track.projects.forEach((project) => {
 
@@ -23,57 +38,82 @@ track.projects.forEach((project) => {
     project.name
   )
 
+
   const erreurs = []
+
 
   const existe = existsSync(cheminProjet)
 
+
   if (!existe) {
-    erreurs.push("- le dossier n'existe pas ou n'est pas nommé correctement")
+    erreurs.push(
+      "- le dossier n'existe pas ou n'est pas nommé correctement"
+    )
   }
 
-  const gitExiste = existsSync(
-    join(cheminProjet, ".git")
-  )
 
-  if (!gitExiste) {
-    erreurs.push("- le repository git n'est pas initialisé")
-  }
-
-  project.required.forEach((fichier) => {
-
-    const cheminFichier = join(
-      cheminProjet,
-      fichier
+  if (existe) {
+    const gitExiste = existsSync(
+      join(cheminProjet, ".git")
     )
 
-    const fichierExiste = existsSync(cheminFichier)
-
-    if (!fichierExiste) {
-      erreurs.push(`- il manque ${fichier}`)
+    if (!gitExiste) {
+      erreurs.push(
+        "- le repository git n'est pas initialisé"
+      )
     }
 
-  })
 
-  if (erreurs.length === 0) {
+    const fichiersPresents = readdirSync(
+      cheminProjet
+    )
+
+
+    const fichiersAbsents = fichiersManquants(
+      fichiersPresents,
+      project.required
+    )
+
+
+    fichiersAbsents.forEach((fichier) => {
+      erreurs.push(
+        `- il manque ${fichier}`
+      )
+    })
+  }
+
+
+  const projetValide = erreurs.length === 0
+
+
+  console.log(
+    ligneRapport(
+      project.name,
+      projetValide
+    )
+  )
+
+
+  if (projetValide) {
     projetsOK++
-    console.log(`✅ dossier du projet ${project.name}`)
   } else {
-    console.log(`❌ dossier du projet ${project.name}`)
-
     erreurs.forEach((erreur) => {
       console.log(erreur)
     })
   }
 
-  console.log("")
 
+  console.log("")
 })
 
+
 const total = track.projects.length
+
 
 const pourcentage = Math.round(
   (projetsOK / total) * 100
 )
+
 
 if (pourcentage === 100) {
   console.log(
